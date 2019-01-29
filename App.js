@@ -7,7 +7,7 @@
  */
 
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Button, Dimensions, DrawerLayoutAndroid } from 'react-native';
+import { Platform, StyleSheet, Text, View, Button, Dimensions, DrawerLayoutAndroid, Picker } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Header from './components/Header';
 import Visualization from './components/Visualization';
@@ -29,31 +29,19 @@ var Sound = require('react-native-sound');
 // Enable playback in silence mode
 Sound.setCategory('Playback');
 
-// Load the sound file 'takbeer_1.mp3' from the app bundle
+// Load the sound file 'sound.mp3' from the app bundle
 // See notes below about preloading sounds within initialization code below.
-var takbeer_1 = new Sound('takbeer_1.mp3', Sound.MAIN_BUNDLE, (error) => {
+var soundFile = new Sound('nyan.mp3', Sound.MAIN_BUNDLE, (error) => {
   if (error) {
-    console.log('failed to load the sound', error);
+    alert('failed to load the sound', error);
     return;
   }
   // loaded successfully
-  console.log('duration in seconds: ' + takbeer_1.getDuration() + 'number of channels: ' + takbeer_1.getNumberOfChannels());
-});
-
-// Play the sound with an onEnd callback
-takbeer_1.play((success) => {
-  if (success) {
-    console.log('successfully finished playing');
-  } else {
-    console.log('playback failed due to audio decoding errors');
-    // reset the player to its uninitialized state (android only)
-    // this is the only option to recover after an error occured and use the player again
-    takbeer_1.reset();
-  }
+  console.log('duration in seconds: ' + soundFile.getDuration() + 'number of channels: ' + soundFile.getNumberOfChannels());
 });
 
 // Release the audio player resource
-takbeer_1.release();
+soundFile.release();
 
 const gradients = [
   {
@@ -74,11 +62,30 @@ const gradients = [
   }
 ]
 
+const files = [
+  {
+    "displayName": "Nyan Cat",
+    "fileName": "nyan.mp3"
+  },
+  {
+    "displayName": "Bells",
+    "fileName": "bell.mp3"
+  },
+  {
+    "displayName": "Door Bell",
+    "fileName": "door.mp3"
+  },
+]
+
 type Props = {};
 export default class App extends Component<Props> {
   state = {
     lines: [],
-    gradientNumber: 0
+    gradientNumber: 0,
+    currentFileLabel: "Nyan Cat",
+    currentFile: "nyan.mp3",
+    isPlaying: false,
+    isLooping: false
   }
 
   componentDidMount() {
@@ -88,16 +95,76 @@ export default class App extends Component<Props> {
   }
 
   render() {
-    const { gradientNumber } = this.state;
+    const { gradientNumber, currentFileLabel, currentFile } = this.state;
 
     const gradientFrom = gradients[gradientNumber].from;
     const gradientTo = gradients[gradientNumber].to;
 
+
     const navigationView = (
       <View style={{ flex: 1, backgroundColor: '#fff' }}>
-        <Text style={{ margin: 10, fontSize: 15, textAlign: 'left' }}>I'm in the Drawer!</Text>
+        <Text style={styles.current}>Current Recitation:</Text>
+        <Picker
+          selectedValue={this.state.currentFile}
+          style={{ height: 50, width: "100%" }}
+          onValueChange={(itemValue, itemIndex) =>
+            this.setState({
+              currentFile: itemValue,
+              currentFileLabel: files[itemIndex].displayName
+            })
+          }>
+          {files.map(index => {
+            return <Picker.Item key={index} label={index.displayName} value={index.fileName} />
+          })}
+        </Picker>
+        {/* <Text style={styles.currentFile}>Madina</Text> */}
+        <Text style={styles.menuItem}>Contribute</Text>
       </View>
     );
+
+    const playSound = () => {
+      soundFile.play((success) => {
+        if (success) {
+          soundFile.stop();
+        } else {
+          alert('playback failed due to audio decoding errors');
+          // reset the player to its uninitialized state (android only)
+          // this is the only option to recover after an error occured and use the player again
+          soundFile.reset();
+        }
+      });
+      // soundFile.play()
+      this.setState({
+        isPlaying: true
+      })
+    }
+    const pauseSound = () => {
+      soundFile.pause()
+      this.setState({
+        isPlaying: false
+      })
+    }
+    const stopSound = () => {
+      soundFile.stop()
+      this.setState({
+        isPlaying: false,
+        isLooping: false
+      })
+    }
+    const loopSound = (loopingStatus) => {
+      if (loopingStatus) {
+        soundFile.setNumberOfLoops(0)
+      } else {
+        soundFile.setNumberOfLoops(-1)
+      }
+      this.setState({
+        isLooping: !loopingStatus
+      })
+    }
+
+    const openMenu = () => {
+      this.refs['MenuDrawer'].openDrawer()
+    }
 
     return (
       <DrawerLayoutAndroid
@@ -106,37 +173,17 @@ export default class App extends Component<Props> {
         renderNavigationView={() => navigationView}
         ref="MenuDrawer">
         <LinearGradient colors={[gradientFrom, gradientTo]} style={styles.container}>
-          <Header />
+          <Header openMenu={openMenu} />
           <Visualization />
-          <Button title="Tap Me?" onPress={() => this.refs['MenuDrawer'].openDrawer()}>Tap Me</Button>
-          <TrackName />
-          <Controls />
-          {/* <Text style={styles.instructions}>volume: {takbeer_1.getVolume()}</Text>
-          <Text style={styles.instructions}>pan: {takbeer_1.getPan()}</Text>
-          <Text style={styles.instructions}>loops: {takbeer_1.getNumberOfLoops()}</Text>
-          <Text style={styles.instructions}>{takbeer_1.getCurrentTime((seconds) => console.log('at ' + seconds))}</Text> */}
-
-          {/* <Svg height={height * 0.5} width={width} viewBox="0 0 120 120">
-          {lineRender}
-        </Svg> */}
-          {/* <AnimatedSVGPath
-          strokeColor={"green"}
-          duration={500}
-          strokeWidth={10}
-          height={400}
-          width={400}
-          scale={0.75}
-          delay={100}
-          d={play}
-          loop={false}
-        /> */}
-
-          {/* <Button title="Add Shape" onPress={() => changeLine()} />
-          <Button title="Change Shape" onPress={() => changeLine2()} />
-          <Button title="Play" onPress={() => takbeer_1.play()} />
-          <Button title="Pause" onPress={() => takbeer_1.pause()} />
-          <Button title="Stop" onPress={() => takbeer_1.stop()} />
-          <Button title="Loop" onPress={() => takbeer_1.setNumberOfLoops(-1)} /> */}
+          {/* <Button title="Tap Me?" onPress={() => }>Tap Me</Button> */}
+          <TrackName currentFile={currentFileLabel} />
+          <Controls
+            play={playSound}
+            pause={pauseSound}
+            stop={stopSound}
+            loop={() => loopSound(this.state.isLooping)}
+            isLooping={this.state.isLooping}
+            isPlaying={this.state.isPlaying} />
         </LinearGradient>
       </DrawerLayoutAndroid>
     );
@@ -150,6 +197,22 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // backgroundColor: '#F5FCFF',
   },
+  menuItem: {
+    padding: 10,
+    fontSize: 15,
+    borderBottomWidth: 1,
+    borderColor: "#cccccc",
+  },
+  current: {
+    fontSize: 20,
+    padding: 10,
+
+  },
+  currentFile: {
+    fontWeight: "bold",
+    fontSize: 18,
+    padding: 10,
+  }
   // welcome: {
   //   fontSize: 20,
   //   textAlign: 'center',

@@ -8,10 +8,11 @@ export default class TrackName extends Component {
     }
 
     render() {
+        const { currentFile } = this.props
 
         return (
             <View style={styles.trackNameWrap}>
-                <Text style={styles.trackName}>Madina</Text>
+                <Text style={styles.trackName}>{currentFile}</Text>
             </View>
         );
     }

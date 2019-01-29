@@ -13,6 +13,7 @@
     "react-native-sound": "^0.10.9",
     "react-native-svg": "^9.0.2",
     "react-native-svg-animations": "^0.1.6",
+    "react-native-vector-icons": "^6.2.0",
     "svg-path-properties": "^0.4.8"
   },
   "devDependencies": {

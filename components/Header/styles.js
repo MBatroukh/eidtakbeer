@@ -5,9 +5,16 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         width: "100%",
-        borderWidth: 1,
-        borderColor: "black",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        alignItems: "center"
+    },
+    menu: {
+        paddingLeft: 10,
+        paddingRight: 10,
+    },
+    more: {
+        paddingLeft: 10,
+        paddingRight: 10,
     }
 });
 
