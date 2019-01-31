@@ -13,31 +13,46 @@ import Header from './components/Header';
 import Visualization from './components/Visualization';
 import TrackName from './components/Name';
 import Controls from './components/Controls';
-import Svg, {
-  Circle,
-  Rect,
-  // Path,
-} from 'react-native-svg';
-// import { AnimatedSVGPath } from 'react-native-svg-animations';
+import Sound from 'react-native-sound';
 
-// const play = "M146.9,79.5L35.1,5.9C15.8-6.8,0,1.7,0,24.8v154.9c0,23.1,15.8,31.6,35.1,19l111.7-73.1C166.2,112.9,166.2,92.2,146.9,79.5z M132, 110.1l - 99.3, 65c - 6.4, 4.2 - 11.7, 1.4 - 11.7 - 6.3V35.7c0 - 7.7, 5.3 - 10.5, 11.7 - 6.3L132, 94.8C138.5, 99, 138.5, 105.9, 132, 110.1z";
-// const play = "M366.2,204.2c-9.8,0-15-5.6-15-15.1V77.2h-85v28h19.5c9.8,0,8.5,2.1,8.5,11.6v72.4c0,9.5,0.5,15.1-9.3,15.1H277h-20.7c-8.5,0-14.2-4.1-14.2-12.9V52.4c0-8.5,5.7-12.3,14.2-12.3h18.8v-28h-127v28h18.1c8.5,0,9.9,2.1,9.9,8.9v56.1h-75V53.4c0-11.5,8.6-13.3,17-13.3h11v-28H2.2v28h26c8.5,0,12,2.1,12,7.9v142.2c0,8.5-3.6,13.9-12,13.9h-21v33h122v-33h-11c-8.5,0-17-4.1-17-12.2v-57.8h75v58.4c0,9.1-1.4,11.6-9.9,11.6h-18.1v33h122.9h5.9h102.2v-33H366.2z"
+import {
+  Player,
+  Recorder,
+  MediaStates
+} from 'react-native-audio-toolkit';
 
-// Import the react-native-sound module
-var Sound = require('react-native-sound');
+var newAudio = 'nyan.mp3';
+var soundFile;
 
-// Enable playback in silence mode
-Sound.setCategory('Playback');
+changeFile = (newFile) => {
+
+  if (newFile == "") {
+    newAudio = "nyan.mp3";
+  } else {
+    newAudio = newFile;
+    soundFile = new Sound(newAudio, Sound.MAIN_BUNDLE, (error) => {
+      if (error) {
+        console.log('failed to load the sound', error);
+        return;
+      }
+      // loaded successfully
+      console.log('duration in seconds: ' + soundFile.getDuration() + 'number of channels: ' + soundFile.getNumberOfChannels());
+    });
+  }
+  alert(newAudio);
+  return newAudio;
+}
 
 // Load the sound file 'sound.mp3' from the app bundle
 // See notes below about preloading sounds within initialization code below.
-var soundFile = new Sound('nyan.mp3', Sound.MAIN_BUNDLE, (error) => {
+soundFile = new Sound(newAudio, Sound.MAIN_BUNDLE, (error) => {
   if (error) {
     alert('failed to load the sound', error);
     return;
   }
+  alert(newAudio)
   // loaded successfully
-  console.log('duration in seconds: ' + soundFile.getDuration() + 'number of channels: ' + soundFile.getNumberOfChannels());
+  // alert('duration in seconds: ' + soundFile.getDuration() + 'number of channels: ' + soundFile.getNumberOfChannels());
 });
 
 // Release the audio player resource
@@ -62,21 +77,6 @@ const gradients = [
   }
 ]
 
-const files = [
-  {
-    "displayName": "Nyan Cat",
-    "fileName": "nyan.mp3"
-  },
-  {
-    "displayName": "Bells",
-    "fileName": "bell.mp3"
-  },
-  {
-    "displayName": "Door Bell",
-    "fileName": "door.mp3"
-  },
-]
-
 type Props = {};
 export default class App extends Component<Props> {
   state = {
@@ -89,6 +89,10 @@ export default class App extends Component<Props> {
   }
 
   componentDidMount() {
+    // this.player = null;
+    // this.recorder = null;
+
+    // // this._reloadPlayer();
     this.setState({
       gradientNumber: Math.floor(Math.random() * gradients.length)
     })
@@ -100,6 +104,23 @@ export default class App extends Component<Props> {
     const gradientFrom = gradients[gradientNumber].from;
     const gradientTo = gradients[gradientNumber].to;
 
+    // Enable playback in silence mode
+    Sound.setCategory('Playback');
+
+    const files = [
+      {
+        "displayName": "Nyan Cat",
+        "fileName": "nyan.mp3"
+      },
+      {
+        "displayName": "Bells",
+        "fileName": "bell.mp3"
+      },
+      {
+        "displayName": "Door Bell",
+        "fileName": "door.mp3"
+      },
+    ]
 
     const navigationView = (
       <View style={{ flex: 1, backgroundColor: '#fff' }}>
@@ -107,11 +128,13 @@ export default class App extends Component<Props> {
         <Picker
           selectedValue={this.state.currentFile}
           style={{ height: 50, width: "100%" }}
-          onValueChange={(itemValue, itemIndex) =>
+          onValueChange={(itemValue, itemIndex) => {
+            changeFile(itemValue);
             this.setState({
               currentFile: itemValue,
               currentFileLabel: files[itemIndex].displayName
             })
+          }
           }>
           {files.map(index => {
             return <Picker.Item key={index} label={index.displayName} value={index.fileName} />
@@ -123,6 +146,7 @@ export default class App extends Component<Props> {
     );
 
     const playSound = () => {
+      // new Player('nyan.mp3', Object ? playbackOptions)
       soundFile.play((success) => {
         if (success) {
           soundFile.stop();
