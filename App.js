@@ -14,6 +14,7 @@ import Visualization from './components/Visualization';
 import TrackName from './components/Name';
 import Controls from './components/Controls';
 import Sound from 'react-native-sound';
+import MusicControl from 'react-native-music-control';
 
 import {
   Player,
@@ -145,6 +146,25 @@ export default class App extends Component<Props> {
       </View>
     );
 
+    MusicControl.enableControl('play', true);
+    MusicControl.on('play', () => {
+      playSound()
+    })
+    MusicControl.enableControl('pause', true);
+    MusicControl.on('pause', () => {
+      pauseSound()
+    })
+    MusicControl.enableControl('stop', true);
+    MusicControl.on('stop', () => {
+      stopSound()
+    })
+    MusicControl.setNowPlaying({
+      title: currentFileLabel,
+      artwork: 'https://i.imgur.com/e1cpwdo.png', // URL or RN's image require()
+      color: 0xFFFFFF, // Notification Color - Android Only
+      notificationIcon: 'my_custom_icon' // Android Only (String), Android Drawable resource name for a custom notification icon
+    })
+
     const playSound = () => {
       // new Player('nyan.mp3', Object ? playbackOptions)
       soundFile.play((success) => {
@@ -157,6 +177,10 @@ export default class App extends Component<Props> {
           soundFile.reset();
         }
       });
+      MusicControl.updatePlayback({
+        state: MusicControl.STATE_PAUSED,
+      })
+
       // soundFile.play()
       this.setState({
         isPlaying: true
