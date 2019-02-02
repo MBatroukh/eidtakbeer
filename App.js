@@ -145,16 +145,16 @@ export default class App extends Component<Props> {
         <Text style={styles.menuItem}>Contribute</Text>
       </View>
     );
-
     MusicControl.enableControl('play', true);
+    MusicControl.enableControl('pause', true);
+    MusicControl.enableControl('stop', true);
     MusicControl.on('play', () => {
       playSound()
+      // state: MusicControl.STATE_PLAYING, // (STATE_ERROR, STATE_STOPPED, STATE_PLAYING, STATE_PAUSED, STATE_BUFFERING)
     })
-    MusicControl.enableControl('pause', true);
     MusicControl.on('pause', () => {
       pauseSound()
     })
-    MusicControl.enableControl('stop', true);
     MusicControl.on('stop', () => {
       stopSound()
     })
@@ -169,7 +169,7 @@ export default class App extends Component<Props> {
       // new Player('nyan.mp3', Object ? playbackOptions)
       soundFile.play((success) => {
         if (success) {
-          soundFile.stop();
+          stopSound();
         } else {
           alert('playback failed due to audio decoding errors');
           // reset the player to its uninitialized state (android only)
@@ -177,9 +177,6 @@ export default class App extends Component<Props> {
           soundFile.reset();
         }
       });
-      MusicControl.updatePlayback({
-        state: MusicControl.STATE_PAUSED,
-      })
 
       // soundFile.play()
       this.setState({
