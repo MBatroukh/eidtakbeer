@@ -1,0 +1,21 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "android/app/src/main/res/raw/bell.mp3",
+      "sha1": "faa373a0e980050898d873a91b95e05bda97f047"
+    },
+    {
+      "path": "android/app/src/main/res/raw/door.mp3",
+      "sha1": "d8073e6b9db9e741d7cd8303677964026bee0a59"
+    },
+    {
+      "path": "android/app/src/main/res/raw/nyan.mp3",
+      "sha1": "f36d31e30e3c1eeb99b3425c03116a2f84ac170f"
+    },
+    {
+      "path": "android/app/src/main/res/raw/takbeer_1.mp3",
+      "sha1": "9fe0b15805c46817969ba73e75926afb50df186f"
+    }
+  ]
+}

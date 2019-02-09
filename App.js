@@ -15,6 +15,7 @@ import TrackName from './components/Name';
 import Controls from './components/Controls';
 import Sound from 'react-native-sound';
 import MusicControl from 'react-native-music-control';
+import GoogleCast, { CastButton } from 'react-native-google-cast';
 
 import {
   Player,
@@ -86,7 +87,8 @@ export default class App extends Component<Props> {
     currentFileLabel: "Nyan Cat",
     currentFile: "nyan.mp3",
     isPlaying: false,
-    isLooping: false
+    isLooping: false,
+    casting: false
   }
 
   componentDidMount() {
@@ -100,7 +102,7 @@ export default class App extends Component<Props> {
   }
 
   render() {
-    const { gradientNumber, currentFileLabel, currentFile } = this.state;
+    const { gradientNumber, currentFileLabel, currentFile, casting } = this.state;
 
     const gradientFrom = gradients[gradientNumber].from;
     const gradientTo = gradients[gradientNumber].to;
@@ -167,6 +169,7 @@ export default class App extends Component<Props> {
 
     const playSound = () => {
       // new Player('nyan.mp3', Object ? playbackOptions)
+      console.log("playing?")
       soundFile.play((success) => {
         if (success) {
           stopSound();
@@ -183,12 +186,29 @@ export default class App extends Component<Props> {
         isPlaying: true
       })
     }
+
+    const playSoundCast = () => {
+      GoogleCast.play();
+      this.setState({
+        isPlaying: true
+      })
+    }
+
     const pauseSound = () => {
       soundFile.pause()
       this.setState({
         isPlaying: false
       })
     }
+
+    const pauseSoundCast = () => {
+      GoogleCast.pause()
+      soundFile.pause()
+      this.setState({
+        isPlaying: false
+      })
+    }
+
     const stopSound = () => {
       soundFile.stop()
       this.setState({
@@ -196,6 +216,15 @@ export default class App extends Component<Props> {
         isLooping: false
       })
     }
+
+    const stopSoundCast = () => {
+      GoogleCast.stop()
+      this.setState({
+        isPlaying: false,
+        isLooping: false
+      })
+    }
+
     const loopSound = (loopingStatus) => {
       if (loopingStatus) {
         soundFile.setNumberOfLoops(0)
@@ -211,6 +240,32 @@ export default class App extends Component<Props> {
       this.refs['MenuDrawer'].openDrawer()
     }
 
+
+    // Connection established
+    GoogleCast.EventEmitter.addListener(GoogleCast.SESSION_STARTED, () => {
+      this.setState({
+        casting: true
+      })
+    })
+
+    // Disconnected (error provides explanation if ended forcefully)
+    GoogleCast.EventEmitter.addListener(GoogleCast.SESSION_ENDED, error => {
+      this.setState({
+        casting: false
+      })
+    })
+
+
+    GoogleCast.castMedia({
+      mediaUrl: 'http://batroukh.com/eidtakbeer/nyan.mp3',
+      imageUrl:
+        'https://thestraightpath.ca/wp-content/uploads/2017/12/grace-zhu-422238-e1514760402317.jpg',
+      title: 'Nyan Cat',
+      streamDuration: 596, // seconds
+      contentType: 'audio/mp3', // Optional, default is "video/mp4"
+      playPosition: 0, // seconds
+    })
+
     return (
       <DrawerLayoutAndroid
         drawerWidth={300}
@@ -219,16 +274,27 @@ export default class App extends Component<Props> {
         ref="MenuDrawer">
         <LinearGradient colors={[gradientFrom, gradientTo]} style={styles.container}>
           <Header openMenu={openMenu} />
+          <CastButton style={{ width: 24, height: 24 }} />
           <Visualization />
           {/* <Button title="Tap Me?" onPress={() => }>Tap Me</Button> */}
           <TrackName currentFile={currentFileLabel} />
-          <Controls
-            play={playSound}
-            pause={pauseSound}
-            stop={stopSound}
-            loop={() => loopSound(this.state.isLooping)}
-            isLooping={this.state.isLooping}
-            isPlaying={this.state.isPlaying} />
+          {casting ?
+            <Controls
+              play={playSoundCast}
+              pause={pauseSoundCast}
+              stop={stopSoundCast}
+              loop={() => loopSound(this.state.isLooping)}
+              isLooping={this.state.isLooping}
+              isPlaying={this.state.isPlaying} />
+            :
+            <Controls
+              play={playSound}
+              pause={pauseSound}
+              stop={stopSound}
+              loop={() => loopSound(this.state.isLooping)}
+              isLooping={this.state.isLooping}
+              isPlaying={this.state.isPlaying} />
+          }
         </LinearGradient>
       </DrawerLayoutAndroid>
     );
