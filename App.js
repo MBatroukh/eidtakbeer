@@ -7,53 +7,56 @@
  */
 
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Button, Dimensions, DrawerLayoutAndroid } from 'react-native';
+import { Platform, StyleSheet, Text, View, Button, Dimensions, DrawerLayoutAndroid, Picker } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Header from './components/Header';
 import Visualization from './components/Visualization';
 import TrackName from './components/Name';
 import Controls from './components/Controls';
-import Svg, {
-  Circle,
-  Rect,
-  // Path,
-} from 'react-native-svg';
-// import { AnimatedSVGPath } from 'react-native-svg-animations';
+import Sound from 'react-native-sound';
+import MusicControl from 'react-native-music-control';
+import GoogleCast, { CastButton } from 'react-native-google-cast';
 
-// const play = "M146.9,79.5L35.1,5.9C15.8-6.8,0,1.7,0,24.8v154.9c0,23.1,15.8,31.6,35.1,19l111.7-73.1C166.2,112.9,166.2,92.2,146.9,79.5z M132, 110.1l - 99.3, 65c - 6.4, 4.2 - 11.7, 1.4 - 11.7 - 6.3V35.7c0 - 7.7, 5.3 - 10.5, 11.7 - 6.3L132, 94.8C138.5, 99, 138.5, 105.9, 132, 110.1z";
-// const play = "M366.2,204.2c-9.8,0-15-5.6-15-15.1V77.2h-85v28h19.5c9.8,0,8.5,2.1,8.5,11.6v72.4c0,9.5,0.5,15.1-9.3,15.1H277h-20.7c-8.5,0-14.2-4.1-14.2-12.9V52.4c0-8.5,5.7-12.3,14.2-12.3h18.8v-28h-127v28h18.1c8.5,0,9.9,2.1,9.9,8.9v56.1h-75V53.4c0-11.5,8.6-13.3,17-13.3h11v-28H2.2v28h26c8.5,0,12,2.1,12,7.9v142.2c0,8.5-3.6,13.9-12,13.9h-21v33h122v-33h-11c-8.5,0-17-4.1-17-12.2v-57.8h75v58.4c0,9.1-1.4,11.6-9.9,11.6h-18.1v33h122.9h5.9h102.2v-33H366.2z"
+import {
+  Player,
+  Recorder,
+  MediaStates
+} from 'react-native-audio-toolkit';
 
-// Import the react-native-sound module
-var Sound = require('react-native-sound');
+var newAudio = 'nyan.mp3';
+var soundFile;
 
-// Enable playback in silence mode
-Sound.setCategory('Playback');
+changeFile = (newFile) => {
 
-// Load the sound file 'takbeer_1.mp3' from the app bundle
+  if (newFile == "") {
+    newAudio = "nyan.mp3";
+  } else {
+    newAudio = newFile;
+    soundFile = new Sound(newAudio, Sound.MAIN_BUNDLE, (error) => {
+      if (error) {
+        console.log('failed to load the sound', error);
+        return;
+      }
+      // loaded successfully
+      console.log('duration in seconds: ' + soundFile.getDuration() + 'number of channels: ' + soundFile.getNumberOfChannels());
+    });
+  }
+  return newAudio;
+}
+
+// Load the sound file 'sound.mp3' from the app bundle
 // See notes below about preloading sounds within initialization code below.
-var takbeer_1 = new Sound('takbeer_1.mp3', Sound.MAIN_BUNDLE, (error) => {
+soundFile = new Sound(newAudio, Sound.MAIN_BUNDLE, (error) => {
   if (error) {
-    console.log('failed to load the sound', error);
+    alert('failed to load the sound', error);
     return;
   }
   // loaded successfully
-  console.log('duration in seconds: ' + takbeer_1.getDuration() + 'number of channels: ' + takbeer_1.getNumberOfChannels());
-});
-
-// Play the sound with an onEnd callback
-takbeer_1.play((success) => {
-  if (success) {
-    console.log('successfully finished playing');
-  } else {
-    console.log('playback failed due to audio decoding errors');
-    // reset the player to its uninitialized state (android only)
-    // this is the only option to recover after an error occured and use the player again
-    takbeer_1.reset();
-  }
+  // alert('duration in seconds: ' + soundFile.getDuration() + 'number of channels: ' + soundFile.getNumberOfChannels());
 });
 
 // Release the audio player resource
-takbeer_1.release();
+soundFile.release();
 
 const gradients = [
   {
@@ -78,26 +81,181 @@ type Props = {};
 export default class App extends Component<Props> {
   state = {
     lines: [],
-    gradientNumber: 0
+    gradientNumber: 0,
+    currentFileLabel: "Nyan Cat",
+    currentFile: "nyan.mp3",
+    isPlaying: false,
+    isLooping: false,
+    casting: false
   }
 
   componentDidMount() {
+    // this.player = null;
+    // this.recorder = null;
+
+    // // this._reloadPlayer();
     this.setState({
       gradientNumber: Math.floor(Math.random() * gradients.length)
     })
   }
 
   render() {
-    const { gradientNumber } = this.state;
+    const { gradientNumber, currentFileLabel, currentFile, casting } = this.state;
 
     const gradientFrom = gradients[gradientNumber].from;
     const gradientTo = gradients[gradientNumber].to;
 
+    // Enable playback in silence mode
+    Sound.setCategory('Playback');
+
+    const files = [
+      {
+        "displayName": "Nyan Cat",
+        "fileName": "nyan.mp3"
+      },
+      {
+        "displayName": "Bells",
+        "fileName": "bell.mp3"
+      },
+      {
+        "displayName": "Door Bell",
+        "fileName": "door.mp3"
+      },
+    ]
+
     const navigationView = (
       <View style={{ flex: 1, backgroundColor: '#fff' }}>
-        <Text style={{ margin: 10, fontSize: 15, textAlign: 'left' }}>I'm in the Drawer!</Text>
+        <Text style={styles.current}>Current Recitation:</Text>
+        <Picker
+          selectedValue={this.state.currentFile}
+          style={{ height: 50, width: "100%" }}
+          onValueChange={(itemValue, itemIndex) => {
+            changeFile(itemValue);
+            this.setState({
+              currentFile: itemValue,
+              currentFileLabel: files[itemIndex].displayName
+            })
+          }
+          }>
+          {files.map(index => {
+            return <Picker.Item key={index} label={index.displayName} value={index.fileName} />
+          })}
+        </Picker>
+        {/* <Text style={styles.currentFile}>Madina</Text> */}
+        <Text style={styles.menuItem}>Contribute</Text>
       </View>
     );
+    MusicControl.enableControl('play', true);
+    MusicControl.enableControl('pause', true);
+    MusicControl.enableControl('stop', true);
+    MusicControl.on('play', () => {
+      playSound()
+      // state: MusicControl.STATE_PLAYING, // (STATE_ERROR, STATE_STOPPED, STATE_PLAYING, STATE_PAUSED, STATE_BUFFERING)
+    })
+    MusicControl.on('pause', () => {
+      pauseSound()
+    })
+    MusicControl.on('stop', () => {
+      stopSound()
+    })
+    MusicControl.setNowPlaying({
+      title: currentFileLabel,
+      artwork: 'https://i.imgur.com/e1cpwdo.png', // URL or RN's image require()
+      color: 0xFFFFFF, // Notification Color - Android Only
+      notificationIcon: 'my_custom_icon' // Android Only (String), Android Drawable resource name for a custom notification icon
+    })
+
+    const playSound = () => {
+      // new Player('nyan.mp3', Object ? playbackOptions)
+      console.log("playing?")
+      soundFile.play((success) => {
+        if (success) {
+          stopSound();
+        } else {
+          alert('playback failed due to audio decoding errors');
+          // reset the player to its uninitialized state (android only)
+          // this is the only option to recover after an error occured and use the player again
+          soundFile.reset();
+        }
+      });
+
+      // soundFile.play()
+      this.setState({
+        isPlaying: true
+      })
+    }
+
+    const playSoundCast = () => {
+      GoogleCast.play();
+    }
+
+    const pauseSound = () => {
+      soundFile.pause()
+      this.setState({
+        isPlaying: false
+      })
+    }
+
+    const pauseSoundCast = () => {
+      GoogleCast.pause();
+    }
+
+    const stopSound = () => {
+      soundFile.stop()
+      this.setState({
+        isPlaying: false,
+        isLooping: false
+      })
+    }
+
+    const stopSoundCast = () => {
+      GoogleCast.stop()
+      this.setState({
+        isPlaying: false,
+        isLooping: false
+      })
+    }
+
+    const loopSound = (loopingStatus) => {
+      if (loopingStatus) {
+        soundFile.setNumberOfLoops(0)
+      } else {
+        soundFile.setNumberOfLoops(-1)
+      }
+      this.setState({
+        isLooping: !loopingStatus
+      })
+    }
+
+    const openMenu = () => {
+      this.refs['MenuDrawer'].openDrawer()
+    }
+
+
+    // Connection established
+    GoogleCast.EventEmitter.addListener(GoogleCast.SESSION_STARTED, () => {
+      this.setState({
+        casting: true
+      })
+    })
+
+    // Disconnected (error provides explanation if ended forcefully)
+    GoogleCast.EventEmitter.addListener(GoogleCast.SESSION_ENDED, error => {
+      this.setState({
+        casting: false
+      })
+    })
+
+
+    GoogleCast.castMedia({
+      mediaUrl: 'http://batroukh.com/eidtakbeer/nyan.mp3',
+      imageUrl:
+        'https://thestraightpath.ca/wp-content/uploads/2017/12/grace-zhu-422238-e1514760402317.jpg',
+      title: 'Nyan Cat',
+      streamDuration: 596, // seconds
+      contentType: 'audio/mp3', // Optional, default is "video/mp4"
+      playPosition: 0, // seconds
+    })
 
     return (
       <DrawerLayoutAndroid
@@ -106,37 +264,28 @@ export default class App extends Component<Props> {
         renderNavigationView={() => navigationView}
         ref="MenuDrawer">
         <LinearGradient colors={[gradientFrom, gradientTo]} style={styles.container}>
-          <Header />
+          <Header openMenu={openMenu} />
+          <CastButton style={{ width: 24, height: 24 }} />
           <Visualization />
-          <Button title="Tap Me?" onPress={() => this.refs['MenuDrawer'].openDrawer()}>Tap Me</Button>
-          <TrackName />
-          <Controls />
-          {/* <Text style={styles.instructions}>volume: {takbeer_1.getVolume()}</Text>
-          <Text style={styles.instructions}>pan: {takbeer_1.getPan()}</Text>
-          <Text style={styles.instructions}>loops: {takbeer_1.getNumberOfLoops()}</Text>
-          <Text style={styles.instructions}>{takbeer_1.getCurrentTime((seconds) => console.log('at ' + seconds))}</Text> */}
-
-          {/* <Svg height={height * 0.5} width={width} viewBox="0 0 120 120">
-          {lineRender}
-        </Svg> */}
-          {/* <AnimatedSVGPath
-          strokeColor={"green"}
-          duration={500}
-          strokeWidth={10}
-          height={400}
-          width={400}
-          scale={0.75}
-          delay={100}
-          d={play}
-          loop={false}
-        /> */}
-
-          {/* <Button title="Add Shape" onPress={() => changeLine()} />
-          <Button title="Change Shape" onPress={() => changeLine2()} />
-          <Button title="Play" onPress={() => takbeer_1.play()} />
-          <Button title="Pause" onPress={() => takbeer_1.pause()} />
-          <Button title="Stop" onPress={() => takbeer_1.stop()} />
-          <Button title="Loop" onPress={() => takbeer_1.setNumberOfLoops(-1)} /> */}
+          {/* <Button title="Tap Me?" onPress={() => }>Tap Me</Button> */}
+          <TrackName currentFile={currentFileLabel} />
+          {casting ?
+            <Controls
+              play={playSoundCast}
+              pause={pauseSoundCast}
+              stop={pauseSoundCast}
+              loop={() => loopSound(this.state.isLooping)}
+              isLooping={this.state.isLooping}
+              isPlaying={this.state.isPlaying} />
+            :
+            <Controls
+              play={playSound}
+              pause={pauseSound}
+              stop={stopSound}
+              loop={() => loopSound(this.state.isLooping)}
+              isLooping={this.state.isLooping}
+              isPlaying={this.state.isPlaying} />
+          }
         </LinearGradient>
       </DrawerLayoutAndroid>
     );
@@ -150,6 +299,22 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // backgroundColor: '#F5FCFF',
   },
+  menuItem: {
+    padding: 10,
+    fontSize: 15,
+    borderBottomWidth: 1,
+    borderColor: "#cccccc",
+  },
+  current: {
+    fontSize: 20,
+    padding: 10,
+
+  },
+  currentFile: {
+    fontWeight: "bold",
+    fontSize: 18,
+    padding: 10,
+  }
   // welcome: {
   //   fontSize: 20,
   //   textAlign: 'center',

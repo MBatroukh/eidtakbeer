@@ -3,6 +3,9 @@ package com.eidtakbeer;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactnative.googlecast.GoogleCastPackage;
+import com.tanguyantoine.react.MusicControl;
+import com.oblador.vectoricons.VectorIconsPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.zmxv.RNSound.RNSoundPackage;
 import com.facebook.react.ReactNativeHost;
@@ -26,6 +29,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new GoogleCastPackage(),
+            new MusicControl(),
+            new VectorIconsPackage(),
             new LinearGradientPackage(),
             new RNSoundPackage(),
             new SvgPackage()

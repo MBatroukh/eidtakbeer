@@ -39,6 +39,15 @@
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		35B733A6E15A4AE5BE5A98C7 /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F26EC1FC274B098D659AD4 /* libRNSound.a */; };
 		B3E4BD1E81494840B01D81EC /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A491535310CF4E4E9792A511 /* libBVLinearGradient.a */; };
+		454DB4760A054C16A8526097 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F1D8E1DCF744BB4AD483850 /* libRNVectorIcons.a */; };
+		64557BBF2CF34980BD4227D1 /* libRNVectorIcons-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B095A10DF74452E83923A40 /* libRNVectorIcons-tvOS.a */; };
+		FA85BF1CF979460E9FC9DF6E /* libMusicControl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BD6C33ADCBE4F49B5581E7B /* libMusicControl.a */; };
+		FBF507E789FB4082AA8D1DBE /* libMusicControl-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55854AE2B7DD45B2A44413DE /* libMusicControl-tvOS.a */; };
+		0D1AB2AC21BB4F49B876552E /* libRNGoogleCast.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF16A7572F524904BB0ABD1D /* libRNGoogleCast.a */; };
+		7B44F1F1E8C443C3BE9CB62D /* bell.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 55B92C740A7F4D08BE2C6E41 /* bell.mp3 */; };
+		7BBBED8DCBAA47F6A5C355AD /* door.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 14BE408C20DE486EA9E6D9F7 /* door.mp3 */; };
+		6A878E71FA2743898BFFD98C /* nyan.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 76839AC9314841F2BD791D79 /* nyan.mp3 */; };
+		5DB5CBB999994BC48EA35DF2 /* takbeer_1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C26B1D8EF1D640E09B498B22 /* takbeer_1.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -348,6 +357,18 @@
 		B3F26EC1FC274B098D659AD4 /* libRNSound.a */ = {isa = PBXFileReference; name = "libRNSound.a"; path = "libRNSound.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		3A3EB7659DF540F8B64888F9 /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; name = "BVLinearGradient.xcodeproj"; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		A491535310CF4E4E9792A511 /* libBVLinearGradient.a */ = {isa = PBXFileReference; name = "libBVLinearGradient.a"; path = "libBVLinearGradient.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		D23392C16FD04B239E8846FB /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; name = "RNVectorIcons.xcodeproj"; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		2F1D8E1DCF744BB4AD483850 /* libRNVectorIcons.a */ = {isa = PBXFileReference; name = "libRNVectorIcons.a"; path = "libRNVectorIcons.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		8B095A10DF74452E83923A40 /* libRNVectorIcons-tvOS.a */ = {isa = PBXFileReference; name = "libRNVectorIcons-tvOS.a"; path = "libRNVectorIcons-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		F606403F90894A1A991271E1 /* MusicControl.xcodeproj */ = {isa = PBXFileReference; name = "MusicControl.xcodeproj"; path = "../node_modules/react-native-music-control/ios/MusicControl.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		1BD6C33ADCBE4F49B5581E7B /* libMusicControl.a */ = {isa = PBXFileReference; name = "libMusicControl.a"; path = "libMusicControl.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		55854AE2B7DD45B2A44413DE /* libMusicControl-tvOS.a */ = {isa = PBXFileReference; name = "libMusicControl-tvOS.a"; path = "libMusicControl-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		5661BB25346D42CC99BE7B2B /* RNGoogleCast.xcodeproj */ = {isa = PBXFileReference; name = "RNGoogleCast.xcodeproj"; path = "../node_modules/react-native-google-cast/ios/RNGoogleCast.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		FF16A7572F524904BB0ABD1D /* libRNGoogleCast.a */ = {isa = PBXFileReference; name = "libRNGoogleCast.a"; path = "libRNGoogleCast.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		55B92C740A7F4D08BE2C6E41 /* bell.mp3 */ = {isa = PBXFileReference; name = "bell.mp3"; path = "../android/app/src/main/res/raw/bell.mp3"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		14BE408C20DE486EA9E6D9F7 /* door.mp3 */ = {isa = PBXFileReference; name = "door.mp3"; path = "../android/app/src/main/res/raw/door.mp3"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		76839AC9314841F2BD791D79 /* nyan.mp3 */ = {isa = PBXFileReference; name = "nyan.mp3"; path = "../android/app/src/main/res/raw/nyan.mp3"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C26B1D8EF1D640E09B498B22 /* takbeer_1.mp3 */ = {isa = PBXFileReference; name = "takbeer_1.mp3"; path = "../android/app/src/main/res/raw/takbeer_1.mp3"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -377,6 +398,9 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				35B733A6E15A4AE5BE5A98C7 /* libRNSound.a in Frameworks */,
 				B3E4BD1E81494840B01D81EC /* libBVLinearGradient.a in Frameworks */,
+				454DB4760A054C16A8526097 /* libRNVectorIcons.a in Frameworks */,
+				FA85BF1CF979460E9FC9DF6E /* libMusicControl.a in Frameworks */,
+				0D1AB2AC21BB4F49B876552E /* libRNGoogleCast.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,6 +416,8 @@
 				2D02E4C61E0B4AEC006451C7 /* libRCTSettings-tvOS.a in Frameworks */,
 				2D02E4C71E0B4AEC006451C7 /* libRCTText-tvOS.a in Frameworks */,
 				2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */,
+				64557BBF2CF34980BD4227D1 /* libRNVectorIcons-tvOS.a in Frameworks */,
+				FBF507E789FB4082AA8D1DBE /* libMusicControl-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,6 +591,9 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				867A896734AA499F908ED803 /* RNSound.xcodeproj */,
 				3A3EB7659DF540F8B64888F9 /* BVLinearGradient.xcodeproj */,
+				D23392C16FD04B239E8846FB /* RNVectorIcons.xcodeproj */,
+				F606403F90894A1A991271E1 /* MusicControl.xcodeproj */,
+				5661BB25346D42CC99BE7B2B /* RNGoogleCast.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -586,6 +615,7 @@
 				00E356EF1AD99517003FC87E /* eidTakbeerTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
+				906C0944ACB24C6A92D0AEFF /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -611,6 +641,18 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		906C0944ACB24C6A92D0AEFF /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				55B92C740A7F4D08BE2C6E41 /* bell.mp3 */,
+				14BE408C20DE486EA9E6D9F7 /* door.mp3 */,
+				76839AC9314841F2BD791D79 /* nyan.mp3 */,
+				C26B1D8EF1D640E09B498B22 /* takbeer_1.mp3 */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -1058,6 +1100,10 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				7B44F1F1E8C443C3BE9CB62D /* bell.mp3 in Resources */,
+				7BBBED8DCBAA47F6A5C355AD /* door.mp3 in Resources */,
+				6A878E71FA2743898BFFD98C /* nyan.mp3 in Resources */,
+				5DB5CBB999994BC48EA35DF2 /* takbeer_1.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1194,11 +1240,15 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
 					"$(SRCROOT)\..\node_modules\react-native-linear-gradient\BVLinearGradient",
+					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-music-control\ios",
+					"$(SRCROOT)\..\node_modules\react-native-google-cast\ios\RNGoogleCast",
 				);
 			};
 			name = Debug;
@@ -1222,11 +1272,15 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
 					"$(SRCROOT)\..\node_modules\react-native-linear-gradient\BVLinearGradient",
+					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-music-control\ios",
+					"$(SRCROOT)\..\node_modules\react-native-google-cast\ios\RNGoogleCast",
 				);
 			};
 			name = Release;
@@ -1251,6 +1305,9 @@
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
 					"$(SRCROOT)\..\node_modules\react-native-linear-gradient\BVLinearGradient",
+					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-music-control\ios",
+					"$(SRCROOT)\..\node_modules\react-native-google-cast\ios\RNGoogleCast",
 				);
 			};
 			name = Debug;
@@ -1274,6 +1331,9 @@
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
 					"$(SRCROOT)\..\node_modules\react-native-linear-gradient\BVLinearGradient",
+					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-music-control\ios",
+					"$(SRCROOT)\..\node_modules\react-native-google-cast\ios\RNGoogleCast",
 				);
 			};
 			name = Release;
@@ -1305,11 +1365,15 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
 					"$(SRCROOT)\..\node_modules\react-native-linear-gradient\BVLinearGradient",
+					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-music-control\ios",
+					"$(SRCROOT)\..\node_modules\react-native-google-cast\ios\RNGoogleCast",
 				);
 			};
 			name = Debug;
@@ -1341,11 +1405,15 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
 					"$(SRCROOT)\..\node_modules\react-native-linear-gradient\BVLinearGradient",
+					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-music-control\ios",
+					"$(SRCROOT)\..\node_modules\react-native-google-cast\ios\RNGoogleCast",
 				);
 			};
 			name = Release;
@@ -1376,11 +1444,15 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
 					"$(SRCROOT)\..\node_modules\react-native-linear-gradient\BVLinearGradient",
+					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-music-control\ios",
+					"$(SRCROOT)\..\node_modules\react-native-google-cast\ios\RNGoogleCast",
 				);
 			};
 			name = Debug;
@@ -1411,11 +1483,15 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-sound\RNSound",
 					"$(SRCROOT)\..\node_modules\react-native-linear-gradient\BVLinearGradient",
+					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-music-control\ios",
+					"$(SRCROOT)\..\node_modules\react-native-google-cast\ios\RNGoogleCast",
 				);
 			};
 			name = Release;

@@ -6,21 +6,40 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         width: "100%",
         height: 200,
-        borderWidth: 1,
-        borderColor: "black",
         justifyContent: "space-around",
         alignItems: "center"
     },
-    button: {
-        height: 100,
-        borderWidth: 1,
-        borderColor: "white",
+    mainButtonPlay: {
+        backgroundColor: "rgba(255, 255, 255, 0.6)",
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 30,
+        paddingRight: 20,
+        borderRadius: 150
     },
-    mainButton: {
-        height: 130,
-        borderWidth: 1,
-        borderColor: "white",
-    }
+    mainButtonPause: {
+        backgroundColor: "rgba(255, 255, 255, 0.6)",
+        paddingTop: 15,
+        paddingBottom: 15,
+        paddingLeft: 27,
+        paddingRight: 27,
+        borderRadius: 150
+    },
+    button: {
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 15,
+        paddingRight: 15,
+        borderRadius: 150
+    },
+    active: {
+        backgroundColor: "rgba(255, 255, 255, 0.6)",
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 15,
+        paddingRight: 15,
+        borderRadius: 150
+    },
 });
 
 export default styles;

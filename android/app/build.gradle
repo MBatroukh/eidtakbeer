@@ -134,9 +134,15 @@ android {
             }
         }
     }
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
+    compile project(':react-native-google-cast')
+    compile project(':react-native-music-control')
+    compile project(':react-native-vector-icons')
     compile project(':react-native-linear-gradient')
     compile project(':react-native-sound')
     implementation fileTree(dir: "libs", include: ["*.jar"])
