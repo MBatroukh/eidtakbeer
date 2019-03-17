@@ -41,7 +41,6 @@ changeFile = (newFile) => {
       console.log('duration in seconds: ' + soundFile.getDuration() + 'number of channels: ' + soundFile.getNumberOfChannels());
     });
   }
-  alert(newAudio);
   return newAudio;
 }
 
@@ -52,7 +51,6 @@ soundFile = new Sound(newAudio, Sound.MAIN_BUNDLE, (error) => {
     alert('failed to load the sound', error);
     return;
   }
-  alert(newAudio)
   // loaded successfully
   // alert('duration in seconds: ' + soundFile.getDuration() + 'number of channels: ' + soundFile.getNumberOfChannels());
 });
@@ -189,9 +187,6 @@ export default class App extends Component<Props> {
 
     const playSoundCast = () => {
       GoogleCast.play();
-      this.setState({
-        isPlaying: true
-      })
     }
 
     const pauseSound = () => {
@@ -202,11 +197,7 @@ export default class App extends Component<Props> {
     }
 
     const pauseSoundCast = () => {
-      GoogleCast.pause()
-      soundFile.pause()
-      this.setState({
-        isPlaying: false
-      })
+      GoogleCast.pause();
     }
 
     const stopSound = () => {
@@ -282,7 +273,7 @@ export default class App extends Component<Props> {
             <Controls
               play={playSoundCast}
               pause={pauseSoundCast}
-              stop={stopSoundCast}
+              stop={pauseSoundCast}
               loop={() => loopSound(this.state.isLooping)}
               isLooping={this.state.isLooping}
               isPlaying={this.state.isPlaying} />
